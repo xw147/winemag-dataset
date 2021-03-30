@@ -7,7 +7,8 @@
 
 import re
 import scrapy
-from scrapy.loader.processors import MapCompose, TakeFirst, Join
+# from scrapy.loader.processors import MapCompose, TakeFirst, Join
+from itemloaders.processors import MapCompose, TakeFirst, Join
 from w3lib.html import remove_tags
 
 
@@ -19,7 +20,7 @@ def price_processor(text):
         yield text[1:].split(',')[0]
 
 
-def varietal_processor(text):
+def variety_processor(text):
     yield text.split(',')[0]
 
 
@@ -35,12 +36,27 @@ def alcohol_processor(text):
 
 
 class PageItem(scrapy.Item):
+    
+    
     url = scrapy.Field(output_processor=TakeFirst())
-
+    
+    imgUrl = scrapy.Field(output_processor=TakeFirst())
+    
+    imgName = scrapy.Field(output_processor=TakeFirst())
+    
+    
     title = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
                          output_processor=Join())
+    
+    reviewer = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
+                         output_processor=Join())
+    
+    reviewerUrl = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
+                         output_processor=Join())
+    
     vintage = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip, vintage_processor),
                            output_processor=Join())
+    
     rating = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
                           output_processor=TakeFirst())
     description = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
@@ -48,9 +64,8 @@ class PageItem(scrapy.Item):
 
     price = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip, price_processor),
                          output_processor=TakeFirst())
-    designation = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
-                               output_processor=Join())
-    varietal = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip, varietal_processor),
+    
+    variety = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip, variety_processor),
                             output_processor=Join())
     subsubregion = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
                              output_processor=Join())
@@ -65,5 +80,15 @@ class PageItem(scrapy.Item):
 
     alcohol = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip, alcohol_processor),
                            output_processor=Join())
+    bottleSize =  scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
+                          output_processor=TakeFirst())
+    importer = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
+                          output_processor=TakeFirst())
+    reviewDate = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
+                          output_processor=TakeFirst())
+    
     category = scrapy.Field(input_processor=MapCompose(remove_tags, str.strip),
                             output_processor=Join())
+    
+
+

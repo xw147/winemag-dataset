@@ -53,7 +53,7 @@ RETRY_HTTP_CODES = [500, 502, 503, 504, 522, 524, 403, 408, 110]
 
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'winemag.pipelines.DuplicateURLsPipeline': 100,
+   'winemag.pipelines.DuplicateURLsPipeline': 300,
 }
 
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -72,3 +72,8 @@ AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 LOG_LEVEL = 'INFO'
+
+# image downloading
+IMAGES_STORE = '/Users/work/2020-wine-files/winemeg2021/image/'
+IMAGES_EXPIRES = 90 
+

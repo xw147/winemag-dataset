@@ -8,7 +8,7 @@ from winemag.spiders.winemag_spider import WinemagSpider
 class WinemagPageSpider(scrapy.Spider):
   name = 'winemag_page'
   url_prefix = 'https://www.winemag.com/buying-guide/{}'
-  total_pages = 12772
+  total_pages = 15421
 
   def start_requests(self):
     if hasattr(self, 'f'):
